@@ -1,0 +1,22 @@
+{
+  "name": "hej-namn",
+  "version": "1.0.0",
+  "description": "Testign stuff",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eric-sundquist/hej-namn.git"
+  },
+  "author": "Eric Sundqvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eric-sundquist/hej-namn/issues"
+  },
+  "homepage": "https://github.com/eric-sundquist/hej-namn#readme"
+}

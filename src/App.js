@@ -1,38 +1,80 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import JSConfetti from 'js-confetti'
+
+
 function App() {
   const [name, setName] = useState('')
-  const [hasName, setHasName] = useState(false)
+  const [quotes, setQuotes] = useState([])
+  const [quote, setQuote] = useState({})
+  const jsConfetti = new JSConfetti()
+  const nameRef = useRef()
 
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    if (name.length > 0) {
-      setHasName(true)
-    } else {
-      setHasName(false)
+  useEffect(() => {
+    const fetchInspoQuotes = async () => {
+      const res = await fetch('https://type.fit/api/quotes')
+      setQuotes(await res.json())
     }
+    fetchInspoQuotes()
+    
+  },[])
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    
+    setQuote(getRandomQuote)
+    setName(nameRef.current.value)
+    jsConfetti.addConfetti()
   }
 
-  const handleNameChange = (event) => {
-    setName(event.target.value)
+  const getRandomQuote = () => {
+    return quotes[Math.floor(Math.random()*1000)]
+  }
+
+  const handleReturn = () => {
+    setName('')
+  }
+
+  const handleConfetti = () => {
+    jsConfetti.addConfetti()
+  }
+
+  const handleNewQuote = () => {
+    setQuote(getRandomQuote)
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Tell me your name
-        </p>
-        <form onSubmit={handleSubmit}>
-          <input type="text" onChange={handleNameChange} />
-          <input type="submit" />
-        </form>
+        {!name ?
+          <div>
+            <p>
+              Hey buddy! What's your name?
+            </p>
+            <form onSubmit={handleSubmit}>
+              <input type="text" ref={nameRef} />
+              <input type="submit" />
+            </form>
+          </div>
+        :
+          <div>
+            <p>Hear now {name}!</p>
+            <p>Getting back to school after summer can be challenging... Here is an insperational quote that might inspire you to keep banging your head against that wall! :)</p>
+            <blockquote>
+              <i>{quote.text}</i>
+              <br/>
+              <i className="Author-name">-{quote.author}</i>
+            </blockquote>
+            <button onClick={handleReturn}>Return</button>
+            <button onClick={handleConfetti}>More confetti</button>
+            <button onClick={handleNewQuote}>New Quote</button>
 
-        {hasName && <p>Hej {name}!</p> }
+          </div>
+        }
+
       </header>
     </div>
   );
 }
 
-export default App;
+export default App

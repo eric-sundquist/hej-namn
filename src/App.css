@@ -13,7 +13,18 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+blockquote {
+  background-color: #474d58;
+  padding: 2rem; 
+  border-radius: 3px;
 }
 
+.Author-name {
+  display: block;
+  text-align: end;
+  font-size: calc(10px + 1vmin);
+}
+
+button {
+  margin-right: 5px;
+}
